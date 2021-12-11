@@ -4,12 +4,17 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
-
+import store from './Reducer/index';
+import { Provider } from 'react-redux';
 ReactDOM.render(
-  <StrictMode>
-    <ColorModeScript />
-    <App />
-  </StrictMode>,
+  <Provider store={store}>
+    <StrictMode>
+      <ColorModeScript />
+      <App />
+    </StrictMode>
+    ,
+  </Provider>,
+
   document.getElementById('root')
 );
 

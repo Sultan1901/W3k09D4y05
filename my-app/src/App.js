@@ -1,4 +1,13 @@
 import React from 'react';
+import axios  from 'axios';
+import Register from './Register/index';
+import Login from './Login/index';
+import Post from './Post/index';
+
+
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -8,15 +17,26 @@ import {
   Code,
   Grid,
   theme,
+  Button,
+  HStack,
+  Input,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+ 
+//============================//
+
 
 function App() {
+  
+  
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
-       heli
+        <VStack>
+          <Register />
+          <Login/>
+          <Post/>
+        </VStack>
       </Box>
     </ChakraProvider>
   );
