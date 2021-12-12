@@ -27,16 +27,16 @@ const Login = () => {
   // const navigate = useNavigate();
   const state = useSelector(state => {
     return {
-      signin: state.Signin,
-      tasks: state.Tasks,
+      Login: state.Login,
+      postRD: state.postRD,
     };
   });
   const dispatch = useDispatch();
   console.log(state);
-    useEffect(() => {
-  const token = localStorage.getItem("token");
-  setLocal(token)
-    }, [])
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setLocal(token);
+  }, []);
   const logInB = async () => {
     const result = await axios.post(`http://localhost:5000/login`, {
       email,
@@ -59,28 +59,30 @@ const Login = () => {
           {!state.token ? (
             <div className="mainDiv">
               <h1>Login</h1>
-              <input
-                type="email"
-                name="email"
-                placeholder="enter Email"
-                onChange={e => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <br />
-              <input
-                type="password"
-                name="email"
-                placeholder="enter Password"
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <br />
-              <button className="btnMain" onClick={logInB}>
-                Login
-              </button>
-              <br />
+              <HStack mt="4">
+                <Input
+                  type="email"
+                  width="40"
+                  placeholder="enter Email"
+                  onChange={e => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                <br />
+                <Input
+                  type="password"
+                  width="40"
+                  placeholder="enter Password"
+                  onChange={e => {
+                    setPassword(e.target.value);
+                  }}
+                />
+                <br />
+                <Button className="btnMain" onClick={logInB}>
+                  Login
+                </Button>
+                <br />
+              </HStack>
             </div>
           ) : (
             <h3></h3>

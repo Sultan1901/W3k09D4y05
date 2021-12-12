@@ -16,80 +16,53 @@ import {
   HStack,
   Input,
 } from '@chakra-ui/react';
-const Task = () => {
+
+
+const Post = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [post, setPost] = useState([]);
   const [local, setLocal] = useState('');
-
-  useEffect(() => {
-    postshow();
-  }, []);
-//   const navigate = useNavigate();
+  // useEffect(() => {
+  //   postshow();
+  // }, []);
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     setLocal(savedToken);
-    postshow();
   }, []);
-  const dispatch = useDispatch();
+  console.log(local);
   const state = useSelector(state => {
     return {
-      signin: state.signin,
-      posts: state.posts,
+      Login: state.Login,
+      postRD: state.postRD,
     };
   });
   const postshow = async () => {
-    const result = await axios.get(`http://localhost:5000/getPost`, {
-      headers: {
-        Authorization: `Bearer ${local}`,
-      },
-    });
-    setPost(result.data);
+    try {
+      const result = await axios.get(`${BASE_URL}/getPost`, {
+        headers: {
+          Authorization: `Bearer ${local}`,
+        },
+      });
+      setPost(result.data);
+      console.log(result.data);
+    } catch (error) {
+      console.log(error);
+
+    }
   };
   const del = async id => {
     try {
-      const res = await axios.delete(`http://localhost:5000/deletePost/${id}`);
+      const res = await axios.delete(`${BASE_URL}/deletePost/${id}`);
       postshow();
     } catch (error) {
       console.log(error);
     }
   };
-  const update = async id => {
-    try {
-      const res = await axios.delete(`http://localhost:5000/updatePost/${id}`);
-      postshow();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const [newpost, setNewPost] = useState('');
-  const addpost = async () => {
-    try {
-      const res = await axios.post(
-        `http://localhost:5000/addPost`,
-        {
-          name: newpost,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${local}`,
-          },
-        }
-      );
-      postshow(local);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const logoutBTN = () => {
-    localStorage.clear();
-    // navigate('/');
-  };
-  const updateTask = async id => {
+  const updatepost = async id => {
     await axios.put(
-      `http://localhost:5000/getPost/${id}`,
+      `${BASE_URL}/updatePost/${id}`,
       {
-        post: post,
+        post:post
       },
       {
         headers: {
@@ -99,42 +72,63 @@ const Task = () => {
     );
     postshow(local);
   };
+  const [newpost, setNewPost] = useState('');
+  const addpost = async () => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/addPost`,
+        {
+          description: newpost,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${local}`,
+          },
+        }
+      );
+      postshow();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <h1>Tasks</h1>
-      <Input
+      <input
         onChange={e => {
           setNewPost(e.target.value);
           console.log(e);
         }}
         placeholder="add task"
       />{' '}
-      <Button onClick={addpost}>add</Button>
-      {post.map(e => (
+      <button onClick={addpost}>add</button>
+      {post.map((e, i) => (
         <ul>
           <li>
-            {e.name}
-            <Button
+            {e.description}
+            {e.commentId}
+            {e.like}
+
+            <button
               onClick={() => {
                 del(e._id);
               }}
             >
               delete
-            </Button>
-            <Input
+            </button>
+            <input
               onChange={e => {
                 setPost(e.target.value);
                 console.log(e);
               }}
               placeholder="update"
-            ></Input>
-            <Button onClick={updateTask(e._id)}>update</Button>
+            />
+            <button onClick={updatepost(e._id)}>update</button>
           </li>{' '}
         </ul>
       ))}
-      <Button onClick={logoutBTN}>signout</Button>
     </div>
   );
 };
 
-export default Task;
+export default Post;

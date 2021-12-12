@@ -32,7 +32,7 @@ function Register() {
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
-        helo
+        
         <HStack mt="4">
           <Input
             onChange={e => {
@@ -58,7 +58,7 @@ function Register() {
             placeholder="password"
             width="40"
           ></Input>
-          <Button onClick={register}>inter</Button>
+          <Button onClick={register}>Register</Button>
           Read more
         </HStack>
       </Box>
