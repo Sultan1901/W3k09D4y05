@@ -108,6 +108,26 @@ const Post = () => {
       console.log(error);
     }
   };
+  const addlike = async postId => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/addLike`,
+        {
+          
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${state.Login.token}`,
+          },
+        }
+      );
+
+      postshow();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container">
       <h1>POSTS</h1>
@@ -136,6 +156,11 @@ const Post = () => {
                       <p className="pargraph"> Comment: {s.description}</p>
                     </>
                   ))}
+                  {/* {e.like.map(s => (
+                    <>
+                      <p className="pargraph">  {s.length}</p>
+                    </>
+                  ))} */}
                   <input
                     className="inpup"
                     onChange={e => {
@@ -161,13 +186,14 @@ const Post = () => {
                     }}
                     placeholder="add comment"
                   />
-                  <button className="addBTN" onClick={()=> addcomment(e._id)}>
+                  <button className="addBTN" onClick={() => addcomment(e._id)}>
                     add
-                  </button><br/>
-                  <button>Like</button>
+                  </button>
+                  <br />
+                  <button onClick={() => addlike(e._id)}>Like </button>
+                  <h1>{e.like.length}</h1>
                 </li>
               </ul>
-             
             ))}
           </div>
         </>
