@@ -31,10 +31,19 @@ function Register() {
   };
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
+      <Box
         
-        <HStack mt="4">
+        borderRadius="3px"
+        border="solid silver"
+        textAlign="center"
+        fontSize="xl"
+        w="300px"
+        mt="100px"
+      >
+        <VStack>
           <Input
+            textAlign="center"
+            mt="30px"
             onChange={e => {
               setUsername(e.target.value);
             }}
@@ -43,6 +52,7 @@ function Register() {
             width="40"
           ></Input>
           <Input
+            textAlign="center"
             onChange={e => {
               setLogemail(e.target.value);
             }}
@@ -51,6 +61,7 @@ function Register() {
             width="40"
           ></Input>
           <Input
+            textAlign="center"
             onChange={e => {
               setLogpassword(e.target.value);
             }}
@@ -59,8 +70,10 @@ function Register() {
             width="40"
           ></Input>
           <Button onClick={register}>Register</Button>
-          Read more
-        </HStack>
+          <Link exact href="/login">
+            Already have account?
+          </Link>
+        </VStack>
       </Box>
     </ChakraProvider>
   );

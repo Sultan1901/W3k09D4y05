@@ -3,6 +3,8 @@ import axios from 'axios';
 import Register from './component/Register/index';
 import Login from './component/Login/index';
 import Post from './component/Post/index';
+import Reset from './component/reset/index';
+
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -31,11 +33,13 @@ function App() {
       <Box textAlign="center" fontSize="xl">
         <VStack>
           <>
-          <Routes>
-            <Route exact path="/" element={<Register />} />
-            <Route exact path="/posts" element={<Post />} />
-            <Route exact path="/login" element={<Login />} />
-          </Routes></>
+            <Routes>
+              <Route exact path="/" element={<Register />} />
+              <Route exact path="/posts" element={<Post />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/reset" element={<Reset />} />
+            </Routes>
+          </>
         </VStack>
       </Box>
     </ChakraProvider>

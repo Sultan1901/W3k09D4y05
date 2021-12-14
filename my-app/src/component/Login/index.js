@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { login } from "../reducers/signin";
 import { sign } from '../../Reducer/login';
 
-
 import {
   ChakraProvider,
   Box,
@@ -34,7 +33,6 @@ const Login = () => {
       Login: state.Login,
       postRD: state.postRD,
     };
-    
   });
 
   const dispatch = useDispatch();
@@ -53,23 +51,31 @@ const Login = () => {
       user: result.data.result,
       token: result.data.token,
     };
-navigate('/posts');
+    navigate('/posts');
     console.log(data);
     dispatch(sign(data));
-    // headers ={
-    //     Authorization:``
-    // }
-    // localStorage.setItem("token", result.data.token);
   };
+
+
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <HStack mt="4">
+      <Box
+        textAlign="center"
+        fontSize="xl"
+        mt="70px"
+        borderRadius="3px"
+        border="solid silver"
+        textAlign="center"
+        fontSize="xl"
+        w="300px"
+      >
+        <VStack mt="4">
           {!state.token ? (
             <div className="mainDiv">
               <h1>Login</h1>
-              <HStack mt="4">
+              <VStack mt="4">
                 <Input
+                  textAlign="center"
                   type="email"
                   width="40"
                   placeholder="enter Email"
@@ -79,6 +85,7 @@ navigate('/posts');
                 />
                 <br />
                 <Input
+                  textAlign="center"
                   type="password"
                   width="40"
                   placeholder="enter Password"
@@ -90,16 +97,16 @@ navigate('/posts');
                 <Button className="btnMain" onClick={logInB}>
                   Login
                 </Button>
-                <Link className="btnMain" onClick={logInB}>
-                  Login
+                <Link exact href="/reset">
+                  Forget password
                 </Link>
                 <br />
-              </HStack>
+              </VStack>
             </div>
           ) : (
             <h3></h3>
           )}
-        </HStack>
+        </VStack>
       </Box>
     </ChakraProvider>
   );
