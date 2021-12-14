@@ -1,38 +1,38 @@
 const initialState = {
-  post: []
+  post: [],
 };
 const postRD = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "GET":
+    case 'GET':
       return payload;
-    case "ADD":
-      const post = [...state.post, payload];
-      return state;
-
-    case "DELETE":
-      return { post };
+    case 'ADD':
+      return { post: [...state.post, payload] };
+    case 'DELETE':
+      return { post: payload };
     default:
       return state;
   }
 };
 export default postRD;
 
-export const getpost = (data) => {
+export const getpost = data => {
   return {
-    type: "GET",
-    payload:{post : data},
+    type: 'GET',
+    payload: { post: data },
   };
 };
-export const addpost = (data) => {
+
+export const addpost = data => {
   return {
-    type: "ADD",
+    type: 'ADD',
     payload: data,
   };
 };
-export const delpost = (data) => {
+
+export const delpost = data => {
   return {
-    type: "DELETE",
+    type: 'DELETE',
     payload: data,
   };
 };

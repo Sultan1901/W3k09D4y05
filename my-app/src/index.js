@@ -4,13 +4,17 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
+
 import store from './Reducer/index';
 import { Provider } from 'react-redux';
 ReactDOM.render(
   <Provider store={store}>
     <StrictMode>
       <ColorModeScript />
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </StrictMode>
     ,
   </Provider>,

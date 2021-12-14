@@ -1,9 +1,9 @@
 import React from 'react';
-import axios  from 'axios';
-import Register from './Register/index';
-import Login from './Login/index';
-import Post from './Post/index';
-
+import axios from 'axios';
+import Register from './component/Register/index';
+import Login from './component/Login/index';
+import Post from './component/Post/index';
+import { Routes, Route } from 'react-router-dom';
 
 
 import { useState } from 'react';
@@ -22,20 +22,20 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { Logo } from './Logo';
- 
+
 //============================//
 
-
 function App() {
-  
-  
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
         <VStack>
-          <Register />
-          <Login/>
-          <Post/>
+          <>
+          <Routes>
+            <Route exact path="/" element={<Register />} />
+            <Route exact path="/posts" element={<Post />} />
+            <Route exact path="/login" element={<Login />} />
+          </Routes></>
         </VStack>
       </Box>
     </ChakraProvider>
