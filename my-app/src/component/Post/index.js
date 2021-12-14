@@ -3,12 +3,14 @@ import { getpost, addpost, delpost } from '../../Reducer/post';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Style from './style.css'
+import Style from './style.css';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Post = () => {
   const [newpost, setNewPost] = useState('');
+    const [newcomment, setNewComment] = useState('');
+
 
   const dispatch = useDispatch();
 
@@ -17,6 +19,7 @@ const Post = () => {
   });
 
   useEffect(() => {
+    setNewPost('m');
     postshow();
   }, []);
 
@@ -29,6 +32,8 @@ const Post = () => {
       });
 
       dispatch(getpost(result.data));
+
+      console.log(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -41,12 +46,11 @@ const Post = () => {
           Authorization: `Bearer ${state.Login.token}`,
         },
       });
-    
-    postshow();
+
+      postshow();
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   const updatepost = async id => {
@@ -84,46 +88,91 @@ const Post = () => {
       console.log(error);
     }
   };
+  const addcomment = async (postId) => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/addComment`,
+        {
+          description: newcomment,
+          postId: postId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${state.Login.token}`,
+          },
+        }
+      );
+
+      postshow();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div>
-          <h1>Tasks</h1>
-          <input
-            onChange={e => {
-              setNewPost(e.target.value);
-            }}
-            placeholder="add task"
-          />
-          <button  onClick={addpost}>add</button>
-          {newpost && newpost.length &&(
-           <>
-          {state.postRD.post.map((e, i) => (
-            <ul>
-              <li><h1>
-               {e.description}</h1>
-               
-
-                <button className="delBTN"
-                  
-                  onClick={() => {
-                    del(e._id);
-                  }}
-                >
-                  delete
-                </button>
-
-                <input className="inpup"
-                  onChange={e => {
-                    setNewPost(e.target.value);
-                  }}
-                  placeholder="update"
-                />
-
-                <button className="upBTN" onClick={() => updatepost(e._id)}>update</button>
-              </li>
-            </ul> 
-            
-          ))}</>)}
-     </div>
+    <div className="container">
+      <h1>POSTS</h1>
+      <input
+        className="npi"
+        onChange={e => {
+          setNewPost(e.target.value);
+        }}
+        placeholder="add Post"
+      />
+      <button className="addBTN" onClick={addpost}>
+        add
+      </button>
+      {newpost && newpost.length && (
+        <>
+          {console.log(state.postRD.post)}
+          <div className="list">
+            {state.postRD.post.map((e, i) => (
+              // <div className="list">
+              <ul>
+                <li>
+                  <h1>{e.description}</h1>
+                  <img id="imag" src={e.img} />
+                  {e.commentId.map(s => (
+                    <>
+                      <p className="pargraph"> Comment: {s.description}</p>
+                    </>
+                  ))}
+                  <input
+                    className="inpup"
+                    onChange={e => {
+                      setNewPost(e.target.value);
+                    }}
+                    placeholder="update"
+                  />
+                  <button className="upBTN" onClick={() => updatepost(e._id)}>
+                    update
+                  </button>{' '}
+                  <button
+                    className="delBTN"
+                    onClick={() => {
+                      del(e._id);
+                    }}
+                  >
+                    delete
+                  </button>
+                  <input
+                    className="npi"
+                    onChange={e => {
+                      setNewComment(e.target.value);
+                    }}
+                    placeholder="add comment"
+                  />
+                  <button className="addBTN" onClick={()=> addcomment(e._id)}>
+                    add
+                  </button><br/>
+                  <button>Like</button>
+                </li>
+              </ul>
+             
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

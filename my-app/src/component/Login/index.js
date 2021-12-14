@@ -90,6 +90,9 @@ navigate('/posts');
                 <Button className="btnMain" onClick={logInB}>
                   Login
                 </Button>
+                <Link className="btnMain" onClick={logInB}>
+                  Login
+                </Link>
                 <br />
               </HStack>
             </div>
