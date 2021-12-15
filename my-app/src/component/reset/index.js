@@ -19,13 +19,13 @@ const Index = () => {
      
 
     const [email , setEmail] = useState('')
-    const checkemail = async (passwordCode) => {
+    const checkemail = async () => {
     
       const result = await axios.post(
-        `${BASE_URL}/check`,
+        `${BASE_URL}/check/`,
         {
           email: email,
-          passwordCode: passwordCode,
+          
         }
         
       );
